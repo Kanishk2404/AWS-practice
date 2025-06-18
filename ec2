@@ -1,0 +1,25 @@
+ran aws ec2 instance of linux , can also run ubuntu.
+
+onnected using ssh, then run sudo yum update -y for amazon and sudo apt update for ubuntu based.
+
+now, running nodejs in it
+
+using debian based ->
+
+sudo apt install nodejs npm
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -  | -> is a pipe operator, takes output from curl command and give it as a input to next command which is bash in this case . sudo -e runs the
+next command and stores the variable as input , then bash execruties those scripts
+sudo apt install -y nodejs  -> after the repository is added run this to install nodejs.
+
+make a directory using mkdir  node-server
+then touch server.js
+nano server.js
+
+
+nohup node server.js > output.log 2>&1 &
+
+cat output.log 
+
+tail -f output.log
+
+then go to inbound rules and 3000 port , custom tcp
