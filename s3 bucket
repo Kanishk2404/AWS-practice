@@ -1,0 +1,88 @@
+🚀 Upload Image to S3
+🔹 Steps:
+Go to the AWS S3 Console
+
+Select or create a bucket (e.g., college-images3)
+
+Click “Upload”
+
+Add your image (e.g., open-theatre-lpu.jpg)
+
+Under Permissions, choose:
+
+pgsql
+Copy code
+Grant public read access to this object(s)
+Complete the upload.
+
+2. 🔓 Set Bucket Policy (If Needed)
+To make all objects in the bucket publicly readable:
+
+🔧 Bucket Policy Example:
+Go to Permissions → Bucket Policy and paste:
+
+json
+Copy code
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PublicReadAccess",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::college-images3/*"
+    }
+  ]
+}
+Also, go to:
+
+Permissions → Block Public Access
+
+Uncheck "Block all public access", then save.
+
+3. 🌐 Get Public URL of the Image
+After uploading:
+
+Go to the file in S3 (open-theatre-lpu.jpg)
+
+Copy the Object URL:
+
+bash
+Copy code
+https://college-images3.s3.ap-south-1.amazonaws.com/open-theatre-lpu.jpg
+4. 🖼️ Embed the Image in HTML Page
+Edit your HTML (e.g., /var/www/html/lpu/index.html):
+
+html
+Copy code
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LPU Open Theatre</title>
+</head>
+<body>
+  <h1>Welcome to LPU</h1>
+  <img src="https://college-images3.s3.ap-south-1.amazonaws.com/open-theatre-lpu.jpg" alt="Open Theatre LPU" width="800">
+</body>
+</html>
+5. 🔁 Restart Nginx (If Needed)
+bash
+Copy code
+sudo systemctl restart nginx
+6. ❌ Can You Use ARN Instead of URL?
+No — ARNs are resource identifiers used in AWS IAM, not for public access.
+
+Example ARN:
+
+ruby
+Copy code
+arn:aws:s3:::college-images3/open-theatre-lpu.jpg
+Browsers require HTTP/HTTPS URLs, not ARNs.
+
+✅ Final Result
+Visiting your EC2 public IP (e.g., http://<your-ec2-ip>/lpu) will now display:
+
+Your custom HTML page
+
+The image served directly from S3
